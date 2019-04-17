@@ -1,0 +1,23 @@
+To build the sdu_boot.h file
+
+1) edit he sdu_boot_source.ino file as needed.
+
+2) open it up in Arduino IDE, be sure to choose the correct SAMD21 version board. Adafruit M0 for example.
+
+3) comple the scketch but do no uplaod it.
+
+4) Go to the compiled bins folder and drag the .ino.bin compiled file to this folder.
+
+5) from the command line perform this to read the bin file and writes it as askii hex to .h file so it can be read and included with the arduino IDE. 
+
+cat sdu_boot_source.ino.bin | xxd -i > sdu_boot_source.h
+
+6) Add this to the top of the sketch and the sdu.h will be included
+
+__attribute__ ((section(".sketch_boot")))
+unsigned char sduBoot[0x4000] =
+{
+#include "sdu_boot_source.h"
+};
+
+
